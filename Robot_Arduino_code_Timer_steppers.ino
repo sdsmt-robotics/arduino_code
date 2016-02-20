@@ -58,6 +58,15 @@ void setup() {
   //Timer1.initialize(1000); // 500,000 uS = .5 S
   //Timer1.attachInterrupt(updateSensors);*/
 }
+/*
+ * Redefinition of the Arduino defined map() function.
+ * map() maps a float input from a given range to a given range.
+ * https://www.arduino.cc/en/Reference/Map
+ */
+float map_range(float x, float in_min, float in_max, float out_min, float out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Main Loop
@@ -73,19 +82,19 @@ void loop() {
     if (cmdTarget == MOTOR_LEFT_TAG)
     {
       if(cmdValue != 127)
-        setLeftStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
+        setLeftStepperRPM(map_range(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
       else
         setLeftStepperRPM(0);
     }
     else if (cmdTarget == MOTOR_RIGHT_TAG)
     {
       if(cmdValue != 127)
-        setRightStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
+        setRightStepperRPM(map_range(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
       else
         setRightStepperRPM(0);
     }
     else
-      Serial.println("FML");
+      Serial.println("FML"); //fitting
     interrupts();
 
     stringComplete = false;
@@ -129,3 +138,4 @@ void updateSensors()
   sensorValue |= IR_LEFT_TAG;
   Serial.println(sensorValue);
 }
+

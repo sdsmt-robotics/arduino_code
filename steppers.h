@@ -85,7 +85,7 @@ void initializeSteppers()
   
 }
 
-void setLeftStepperRPM(int rpm)
+void setLeftStepperRPM(float rpm)
 {
   Serial.print("rpm in = ");
   Serial.println(rpm);
@@ -101,7 +101,7 @@ void setLeftStepperRPM(int rpm)
     return;
   }
     
-  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+  unsigned long stepsSec = (unsigned long) ((abs(rpm) * STEPS_REV) / 60);
   Serial.print("stepsSec = ");
   Serial.println(stepsSec);
 
@@ -113,7 +113,7 @@ void setLeftStepperRPM(int rpm)
   Serial.println(leftSpeed);
 }
 
-void setRightStepperRPM(int rpm)
+void setRightStepperRPM(float rpm)
 {
   Serial.print("rpm in = ");
   Serial.println(rpm);
@@ -129,7 +129,7 @@ void setRightStepperRPM(int rpm)
     return;
   }
 
-  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+  unsigned long stepsSec = (unsigned long) ((abs(rpm) * STEPS_REV) / 60);
   Serial.print("stepsSec = ");
   Serial.println(stepsSec);
   
