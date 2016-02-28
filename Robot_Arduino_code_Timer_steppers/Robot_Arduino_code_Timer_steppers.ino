@@ -2,7 +2,7 @@
 //    Library Includes
 ////////////////////////////////////////////////////////////////////////////////
 #include "steppers.h"
-//#include "AccelStepper.h"
+#include "servos.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Pin Defines
@@ -12,10 +12,6 @@
 #define IR_RIGHT  A0
 #define IR_CENTER A1
 #define IR_LEFT   A2
-
-//    DC Motor Pins
-#define MOTOR_RIGHT 11
-#define MOTOR_LEFT  10
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Packet Designations
@@ -27,6 +23,9 @@
 
 #define MOTOR_LEFT_TAG  0x4C
 #define MOTOR_RIGHT_TAG 0x52
+
+#define CLAW_CLOSE_TAG  0x41
+#define CLAW_RAISE_TAG  0x42
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Global Variables
@@ -48,15 +47,9 @@ unsigned char cmdTarget = 0;
 void setup() {
   Serial.begin(115200);
   inputString.reserve(2);
-
-  // DC Motor Pins
-  pinMode(MOTOR_LEFT, OUTPUT);
-  pinMode(MOTOR_RIGHT, OUTPUT);
   
   initializeSteppers();
-  
-  //Timer1.initialize(1000); // 500,000 uS = .5 S
-  //Timer1.attachInterrupt(updateSensors);*/
+  initializeServos();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,22 +63,43 @@ void loop() {
     unsigned char cmdValue = inputString[1];
     //Serial.println(cmdValue);
     noInterrupts();
-    if (cmdTarget == MOTOR_LEFT_TAG)
+    switch(cmdTarget)
     {
-      if(cmdValue != 127)
-        setLeftStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
-      else
-        setLeftStepperRPM(0);
+      case MOTOR_LEFT_TAG:
+      {
+        if(cmdValue != 127)
+          setLeftStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
+        else
+          setLeftStepperRPM(0);
+        break;
+      }
+      case MOTOR_RIGHT_TAG:
+      {
+        if(cmdValue != 127)
+          setRightStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
+        else
+          setRightStepperRPM(0);
+        break;
+      }
+      case CLAW_RAISE_TAG:
+      {
+        if(cmdValue == 1)
+          raiseClaw();
+        else
+          lowerClaw();
+        break;
+      }
+      case CLAW_CLOSE_TAG:
+      {
+        if(cmdValue == 1)
+          closeClaw();
+        else
+          openClaw();
+        break;
+      }
+      default:
+        Serial.println("FML");
     }
-    else if (cmdTarget == MOTOR_RIGHT_TAG)
-    {
-      if(cmdValue != 127)
-        setRightStepperRPM(map(cmdValue, 0, 255, -MAX_SPEED, MAX_SPEED));
-      else
-        setRightStepperRPM(0);
-    }
-    else
-      Serial.println("FML");
     interrupts();
 
     stringComplete = false;

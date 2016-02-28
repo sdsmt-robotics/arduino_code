@@ -40,7 +40,7 @@ void updateLeftMotor()
     Timer1.pwm(STEPPER_LEFT_STEP, 0, leftSpeed);
     //Timer1.disablePwm(STEPPER_LEFT_STEP);
   else
-//    Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftSpeed);
+    Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftSpeed);
 }
 
 void updateRightMotor()
