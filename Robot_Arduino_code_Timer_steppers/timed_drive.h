@@ -23,8 +23,8 @@ void stepLeft()
   else
   {
     digitalWrite(STEPPER_LEFT_STEP, HIGH);
-    for(int i = 0; i < 500; i++)
-      int j = i;
+    /*for(int i = 0; i < 500; i++)
+      int j = i;*/
     digitalWrite(STEPPER_LEFT_STEP, LOW);
     leftSteps++;
   }
