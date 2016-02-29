@@ -17,13 +17,14 @@ void stepLeft()
   Serial.println(leftSteps);
   if(leftSteps >= leftStepsTarget || leftStepsTarget == 0)
   {
-    Timer1.pwm(STEPPER_LEFT_STEP, 0, leftMicrosPerStep);
+    digitalWrite(STEPPER_LEFT_STEP, LOW);
     Timer1.detachInterrupt();
   }
   else
   {
     digitalWrite(STEPPER_LEFT_STEP, HIGH);
-    delayMicroseconds(1);
+    for(int i = 0; i < 500; i++)
+      int j = i;
     digitalWrite(STEPPER_LEFT_STEP, LOW);
     leftSteps++;
   }
@@ -46,6 +47,9 @@ void setLeftStepperStepsTime(int steps, int seconds)
   Timer1.detachInterrupt();
   Timer1.attachInterrupt(stepLeft);
   Timer1.setPeriod(leftMicrosPerStep);
+
+  leftSteps = 0;
+  Timer1.disablePwm(STEPPER_LEFT_STEP);
   
   interrupts();
   
