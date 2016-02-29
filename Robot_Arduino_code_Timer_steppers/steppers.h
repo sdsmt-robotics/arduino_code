@@ -27,8 +27,9 @@
 #define STEPPER_LEFT_STEP   13
 #define STEPPER_RIGHT_STEP   2 
 
-volatile unsigned long leftSpeed = 0; //global vars for speed control, checked by the interrupt every 1 mS. in uS/step
-volatile unsigned long rightSpeed = 0;
+volatile unsigned long leftConstSpeed = 0; //global vars for speed control, checked by the interrupt every 1 mS. in uS/step
+volatile unsigned long rightConstSpeed = 0;
+
 volatile char rightDir = 0; // 1 = forward
 volatile char leftDir = 0;
 
@@ -36,20 +37,20 @@ volatile unsigned int stepDelay = 0;
 
 void updateLeftMotor()
 {
-  if(leftSpeed == 0)
-    Timer1.pwm(STEPPER_LEFT_STEP, 0, leftSpeed);
+  if(leftConstSpeed == 0)
+    Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
     //Timer1.disablePwm(STEPPER_LEFT_STEP);
   else
-    Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftSpeed);
+    Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
 }
 
 void updateRightMotor()
 {
-  if(rightSpeed == 0)
-    Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightSpeed);
+  if(rightConstSpeed == 0)
+    Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
     //Timer3.disablePwm(STEPPER_RIGHT_STEP);
   else
-    Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightSpeed);
+    Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
 }
 
 void initializeSteppers()
@@ -85,10 +86,10 @@ void initializeSteppers()
   
 }
 
-void setLeftStepperRPM(int rpm)
+void setLeftStepperConstRPM(int rpm)
 {
-  Serial.print("rpm in = ");
-  Serial.println(rpm);
+  //Serial.print("rpm in = ");
+  //Serial.println(rpm);
    if(rpm > 0)
     digitalWrite(STEPPER_LEFT_DIR, LOW);
   else if(rpm < 0)
@@ -96,27 +97,29 @@ void setLeftStepperRPM(int rpm)
   else
   {
     noInterrupts();
-    leftSpeed = 0;
+    leftConstSpeed = 0;
     interrupts();
     return;
   }
     
   unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
-  Serial.print("stepsSec = ");
-  Serial.println(stepsSec);
+  //Serial.print("stepsSec = ");
+  //Serial.println(stepsSec);
 
   noInterrupts();
-  leftSpeed = 1000000 / stepsSec;
+  leftConstSpeed = 1000000 / stepsSec;
+  Timer1.attachInterrupt(updateLeftMotor);
+  Timer1.setPeriod(UPDATE_TIME);
   interrupts();
   
-  Serial.print("leftSpeed = ");
-  Serial.println(leftSpeed);
+  //Serial.print("leftConstSpeed = ");
+  //Serial.println(leftConstSpeed);
 }
 
-void setRightStepperRPM(int rpm)
+void setRightStepperConstRPM(int rpm)
 {
-  Serial.print("rpm in = ");
-  Serial.println(rpm);
+  //Serial.print("rpm in = ");
+  //Serial.println(rpm);
   if(rpm > 0)
     digitalWrite(STEPPER_RIGHT_DIR, HIGH);
   else if(rpm < 0)
@@ -124,21 +127,23 @@ void setRightStepperRPM(int rpm)
   else
   {
     noInterrupts();
-    rightSpeed = 0;
+    rightConstSpeed = 0;
     interrupts();
     return;
   }
 
   unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
-  Serial.print("stepsSec = ");
-  Serial.println(stepsSec);
+  //Serial.print("stepsSec = ");
+  //Serial.println(stepsSec);
   
   noInterrupts();
-  rightSpeed = 1000000 / stepsSec;
+  rightConstSpeed = 1000000 / stepsSec;
+  Timer3.attachInterrupt(updateRightMotor);
+  Timer3.setPeriod(UPDATE_TIME);
   interrupts();
   
-  Serial.print("rightSpeed = ");
-  Serial.println(rightSpeed);
+  //Serial.print("rightConstSpeed = ");
+  //Serial.println(rightConstSpeed);
 }
 
 #endif
