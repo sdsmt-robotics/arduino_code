@@ -107,7 +107,7 @@ void loop() {
       }
       case MOTOR_LEFT_STEPS_TAG:
       {
-        Serial.println("STEPS received.");
+        Serial.println("LEFT_STEPS received.");
         Serial.println("-steps-");
         int steps = assembleInt(input, 0);
         Serial.println(steps);
@@ -119,7 +119,14 @@ void loop() {
       }
       case MOTOR_RIGHT_STEPS_TAG:
       {
-        Serial.println("STEPS received.");
+        Serial.println("RIGHT_STEPS received.");
+        Serial.println("-steps-");
+        int steps = assembleInt(input, 0);
+        Serial.println(steps);
+        Serial.println("-seconds-");
+        int seconds = assembleInt(input, 4);
+        Serial.println(seconds);
+        setRightStepperStepsTime(steps, seconds);
         break;
       }
       case CLAW_RAISE_TAG:
@@ -152,41 +159,7 @@ void loop() {
   interrupts();
 }
 
-/*
-  SerialEvent occurs whenever a new data comes in the
- hardware serial RX.  This routine is run between each
- time loop() runs, so using delay inside loop can delay
- response.  Multiple bytes of data may be available.
- */
- /*
-void serialEvent() {
-  if (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    if(inChar != MOTOR_LEFT_STEPS_TAG && inChar != MOTOR_RIGHT_STEPS_TAG)
-    {
-      while (!Serial.available()) {}
-      inChar = (char)Serial.read();
-      inputString+= inChar;
-      //Serial.println(inputString);
-      stringComplete = true;
-    }
-    else
-    {
-      while(Serial.available() < 3){}
-      while(Serial.available() > 0)
-      {
-        inChar = (unsigned char)Serial.read();
-        inputString += inChar;
-      }
-      Serial.print("inputString = ");
-      Serial.println(inputString);
-      stringComplete = true;
-    }
-  }
-}*/
+
 
 int assembleInt(unsigned char *string, int index)
 {
@@ -198,10 +171,6 @@ int assembleInt(unsigned char *string, int index)
   }
   for(int i = 3; i > -1; i--)
   {
-    /*Serial.print("num: ");
-    Serial.println(num, BIN);
-    Serial.print("inBytes[i]: ");
-    Serial.println(inBytes[i], BIN);*/
     num = num << 8;
     num = num | inBytes[i];
   }
