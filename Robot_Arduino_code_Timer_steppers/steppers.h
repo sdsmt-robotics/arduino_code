@@ -33,13 +33,10 @@ volatile unsigned long rightConstSpeed = 0;
 volatile char rightDir = 0; // 1 = forward
 volatile char leftDir = 0;
 
-volatile unsigned int stepDelay = 0;
-
 void updateLeftMotor()
 {
   if(leftConstSpeed == 0)
     Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
-    //Timer1.disablePwm(STEPPER_LEFT_STEP);
   else
     Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
 }
@@ -48,7 +45,6 @@ void updateRightMotor()
 {
   if(rightConstSpeed == 0)
     Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
-    //Timer3.disablePwm(STEPPER_RIGHT_STEP);
   else
     Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
 }
@@ -91,32 +87,32 @@ void setLeftStepperConstRPM(int rpm)
   //Serial.print("rpm in = ");
   //Serial.println(rpm);
    if(rpm > 0)
-    digitalWrite(STEPPER_LEFT_DIR, LOW);
+    digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
   else if(rpm < 0)
-    digitalWrite(STEPPER_LEFT_DIR, HIGH);
+    digitalWrite(STEPPER_LEFT_DIR, HIGH); //tally ho, m8 (take it back now ya'll)
   else
   {
     noInterrupts();
-    leftConstSpeed = 0;
+    leftConstSpeed = 0; //just do nothing, m8
     interrupts();
     return;
   }
     
-  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60; //calcs the number of steps per sec from RPM
   //Serial.print("stepsSec = ");
   //Serial.println(stepsSec);
 
   noInterrupts();
-  leftConstSpeed = 1000000 / stepsSec;
-  Timer1.attachInterrupt(updateLeftMotor);
-  Timer1.setPeriod(UPDATE_TIME);
+  leftConstSpeed = 1000000 / stepsSec; //in this case "spped: is in uS per step. sorry about the stupid logic
+  Timer1.attachInterrupt(updateLeftMotor); //get the interrupt on there in case it was detached/had a different function
+  Timer1.setPeriod(UPDATE_TIME); //set the interrupt to update the stepper speed UPDATE_TIME micros
   interrupts();
   
   //Serial.print("leftConstSpeed = ");
   //Serial.println(leftConstSpeed);
 }
 
-void setRightStepperConstRPM(int rpm)
+void setRightStepperConstRPM(int rpm) //same as function above, just check it out
 {
   //Serial.print("rpm in = ");
   //Serial.println(rpm);

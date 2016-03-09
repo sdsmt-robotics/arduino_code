@@ -20,8 +20,6 @@ void stepLeft()
   else
   {
     digitalWrite(STEPPER_LEFT_STEP, HIGH);
-    /*for(int i = 0; i < 500; i++)
-      int j = i;*/
     digitalWrite(STEPPER_LEFT_STEP, LOW);
     leftSteps++;
   }
@@ -38,8 +36,6 @@ void stepRight()
   else
   {
     digitalWrite(STEPPER_RIGHT_STEP, HIGH);
-    /*for(int i = 0; i < 500; i++)
-      int j = i;*/
     digitalWrite(STEPPER_RIGHT_STEP, LOW);
     rightSteps++;
   }
@@ -50,9 +46,9 @@ void setLeftStepperStepsTime(int steps, int seconds)
   unsigned long leftMicrosPerStep = (seconds * 1000000) / steps; //calculates the number of micros per step
   
   if(steps > 0)
-    digitalWrite(STEPPER_LEFT_DIR, LOW);
-  else if(steps < 0)
     digitalWrite(STEPPER_LEFT_DIR, HIGH);
+  else if(steps < 0)
+    digitalWrite(STEPPER_LEFT_DIR, LOW);
   else
     return;
 
