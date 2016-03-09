@@ -35,18 +35,34 @@ volatile char leftDir = 0;
 
 void updateLeftMotor()
 {
+<<<<<<< HEAD
   if(leftConstSpeed == 0)
     Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
   else
     Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
+=======
+    if(leftConstSpeed == 0)
+        Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
+    //Timer1.disablePwm(STEPPER_LEFT_STEP);
+    else
+        Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void updateRightMotor()
 {
+<<<<<<< HEAD
   if(rightConstSpeed == 0)
     Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
   else
     Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
+=======
+    if(rightConstSpeed == 0)
+        Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
+        //Timer3.disablePwm(STEPPER_RIGHT_STEP);
+    else
+        Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void initializeSteppers()
@@ -86,6 +102,7 @@ void setLeftStepperConstRPM(int rpm)
 {
   //Serial.print("rpm in = ");
   //Serial.println(rpm);
+<<<<<<< HEAD
    if(rpm > 0)
     digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
   else if(rpm < 0)
@@ -110,6 +127,32 @@ void setLeftStepperConstRPM(int rpm)
   
   //Serial.print("leftConstSpeed = ");
   //Serial.println(leftConstSpeed);
+=======
+    if(rpm > 0)
+        digitalWrite(STEPPER_LEFT_DIR, LOW);
+    else if(rpm < 0)
+        digitalWrite(STEPPER_LEFT_DIR, HIGH);
+    else
+    {
+        noInterrupts();
+        leftConstSpeed = 0;
+        interrupts();
+        return;
+    }
+    
+    unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+    //Serial.print("stepsSec = ");
+    //Serial.println(stepsSec);
+
+    noInterrupts();
+    leftConstSpeed = 1000000 / stepsSec;
+    Timer1.attachInterrupt(updateLeftMotor);
+    Timer1.setPeriod(UPDATE_TIME);
+    interrupts();
+
+    //Serial.print("leftConstSpeed = ");
+    //Serial.println(leftConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void setRightStepperConstRPM(int rpm) //same as function above, just check it out
