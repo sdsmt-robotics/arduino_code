@@ -47,7 +47,7 @@ void stepRight()
 
 void setLeftStepperStepsTime(int steps, int seconds)
 {
-    unsigned long leftMicrosPerStep = (seconds * 1000000) / steps; //calculates the number of micros per step
+    unsigned long leftMicrosPerStep = (seconds * 1000000) / abs(steps); //calculates the number of micros per step
   
     if(steps > 0)
         digitalWrite(STEPPER_LEFT_DIR, HIGH);
@@ -72,7 +72,7 @@ void setLeftStepperStepsTime(int steps, int seconds)
 
 void setRightStepperStepsTime(int steps, int seconds)
 {
-    unsigned long rightMicrosPerStep = (seconds * 1000000) / steps; //calculates the number of micros per step
+    unsigned long rightMicrosPerStep = (seconds * 1000000) / abs(steps); //calculates the number of micros per step
   
     if(steps > 0)
         digitalWrite(STEPPER_RIGHT_DIR, LOW);
