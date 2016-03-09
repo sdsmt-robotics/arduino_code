@@ -35,18 +35,18 @@ volatile char leftDir = 0;
 
 void updateLeftMotor()
 {
-  if(leftConstSpeed == 0)
-    Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
-  else
-    Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
+    if(leftConstSpeed == 0)
+        Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
+    else
+        Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
 }
 
 void updateRightMotor()
 {
-  if(rightConstSpeed == 0)
-    Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
-  else
-    Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
+    if(rightConstSpeed == 0)
+        Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
+    else
+        Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
 }
 
 void initializeSteppers()
@@ -86,30 +86,30 @@ void setLeftStepperConstRPM(int rpm)
 {
   //Serial.print("rpm in = ");
   //Serial.println(rpm);
-   if(rpm > 0)
-    digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
-  else if(rpm < 0)
-    digitalWrite(STEPPER_LEFT_DIR, HIGH); //tally ho, m8 (take it back now ya'll)
-  else
-  {
-    noInterrupts();
-    leftConstSpeed = 0; //just do nothing, m8
-    interrupts();
-    return;
-  }
+    if(rpm > 0)
+        digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
+    else if(rpm < 0)
+        digitalWrite(STEPPER_LEFT_DIR, HIGH); //tally ho, m8 (take it back now ya'll)
+    else
+    {
+        noInterrupts();
+        leftConstSpeed = 0; //just do nothing, m8
+        interrupts();
+        return;
+    }
     
-  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60; //calcs the number of steps per sec from RPM
-  //Serial.print("stepsSec = ");
-  //Serial.println(stepsSec);
+    unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60; //calcs the number of steps per sec from RPM
+    //Serial.print("stepsSec = ");
+    //Serial.println(stepsSec);
 
-  noInterrupts();
-  leftConstSpeed = 1000000 / stepsSec; //in this case "spped: is in uS per step. sorry about the stupid logic
-  Timer1.attachInterrupt(updateLeftMotor); //get the interrupt on there in case it was detached/had a different function
-  Timer1.setPeriod(UPDATE_TIME); //set the interrupt to update the stepper speed UPDATE_TIME micros
-  interrupts();
-  
-  //Serial.print("leftConstSpeed = ");
-  //Serial.println(leftConstSpeed);
+    noInterrupts();
+    leftConstSpeed = 1000000 / stepsSec; //in this case "spped: is in uS per step. sorry about the stupid logic
+    Timer1.attachInterrupt(updateLeftMotor); //get the interrupt on there in case it was detached/had a different function
+    Timer1.setPeriod(UPDATE_TIME); //set the interrupt to update the stepper speed UPDATE_TIME micros
+    interrupts();
+
+    //Serial.print("leftConstSpeed = ");
+    //Serial.println(leftConstSpeed);
 }
 
 void setRightStepperConstRPM(int rpm) //same as function above, just check it out
@@ -143,6 +143,7 @@ void setRightStepperConstRPM(int rpm) //same as function above, just check it ou
 }
 
 #endif
+
 
 
 

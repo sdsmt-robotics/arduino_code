@@ -9,7 +9,7 @@
 
 #define CLAW_OPEN_POS  20
 #define CLAW_CLOSE_POS 90
-#define CLAW_DOWN_POS  20 //these values will have to be adjusted
+#define CLAW_DOWN_POS  20
 #define CLAW_UP_POS    120
 
 Servo leftServo, rightServo, raiseServo;
