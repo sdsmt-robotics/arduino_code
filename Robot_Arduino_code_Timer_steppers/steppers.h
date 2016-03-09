@@ -35,57 +35,74 @@ volatile char leftDir = 0;
 
 void updateLeftMotor()
 {
+<<<<<<< HEAD
   if(leftConstSpeed == 0)
     Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
   else
     Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
+=======
+    if(leftConstSpeed == 0)
+        Timer1.pwm(STEPPER_LEFT_STEP, 0, leftConstSpeed);
+    //Timer1.disablePwm(STEPPER_LEFT_STEP);
+    else
+        Timer1.pwm(STEPPER_LEFT_STEP, DUTY_CYCLE, leftConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void updateRightMotor()
 {
+<<<<<<< HEAD
   if(rightConstSpeed == 0)
     Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
   else
     Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
+=======
+    if(rightConstSpeed == 0)
+        Timer3.pwm(STEPPER_RIGHT_STEP, 0, rightConstSpeed);
+        //Timer3.disablePwm(STEPPER_RIGHT_STEP);
+    else
+        Timer3.pwm(STEPPER_RIGHT_STEP, DUTY_CYCLE, rightConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void initializeSteppers()
 {
-  Timer1.initialize(UPDATE_TIME); //set it up!
-  Timer3.initialize(UPDATE_TIME); //set it up!
-  Timer1.attachInterrupt(updateLeftMotor); //attach the update function
-  Timer3.attachInterrupt(updateRightMotor); //attach the update function
-  Timer1.pwm(STEPPER_LEFT_STEP, 0, 1000000); //set up pwm on 9 and 10
-  Timer3.pwm(STEPPER_RIGHT_STEP, 0, 1000000);
+    Timer1.initialize(UPDATE_TIME); //set it up!
+    Timer3.initialize(UPDATE_TIME); //set it up!
+    Timer1.attachInterrupt(updateLeftMotor); //attach the update function
+    Timer3.attachInterrupt(updateRightMotor); //attach the update function
+    Timer1.pwm(STEPPER_LEFT_STEP, 0, 1000000); //set up pwm on 9 and 10
+    Timer3.pwm(STEPPER_RIGHT_STEP, 0, 1000000);
 
-  // Left Stepper Pins
-  pinMode(STEPPER_LEFT_DIR, OUTPUT);
-  pinMode(STEPPER_LEFT_STEP, OUTPUT);
-  pinMode(STEPPER_LEFT_MS1, OUTPUT);
-  pinMode(STEPPER_LEFT_MS2, OUTPUT);
-  pinMode(STEPPER_LEFT_ENABLE, OUTPUT); //should be hardwired to ground
-  
-  digitalWrite(STEPPER_LEFT_MS1, LOW); //enable 1/4 microstepping
-  digitalWrite(STEPPER_LEFT_MS2, HIGH);
-  digitalWrite(STEPPER_LEFT_ENABLE, LOW); //should be unnecessary
+    // Left Stepper Pins
+    pinMode(STEPPER_LEFT_DIR, OUTPUT);
+    pinMode(STEPPER_LEFT_STEP, OUTPUT);
+    pinMode(STEPPER_LEFT_MS1, OUTPUT);
+    pinMode(STEPPER_LEFT_MS2, OUTPUT);
+    pinMode(STEPPER_LEFT_ENABLE, OUTPUT); //should be hardwired to ground
 
-  // Right Stepper Pins
-  pinMode(STEPPER_RIGHT_DIR, OUTPUT);
-  pinMode(STEPPER_RIGHT_STEP, OUTPUT);
-  pinMode(STEPPER_RIGHT_MS1, OUTPUT);
-  pinMode(STEPPER_RIGHT_MS2, OUTPUT);
-  pinMode(STEPPER_RIGHT_ENABLE, OUTPUT); //should be hardwired to ground
+    digitalWrite(STEPPER_LEFT_MS1, LOW); //enable 1/4 microstepping
+    digitalWrite(STEPPER_LEFT_MS2, HIGH);
+    digitalWrite(STEPPER_LEFT_ENABLE, LOW); //should be unnecessary
 
-  digitalWrite(STEPPER_RIGHT_MS1, LOW); //enable 1/4 microstepping
-  digitalWrite(STEPPER_RIGHT_MS2, HIGH);
-  digitalWrite(STEPPER_RIGHT_ENABLE, LOW); //should be unnecessary
-  
+    // Right Stepper Pins
+    pinMode(STEPPER_RIGHT_DIR, OUTPUT);
+    pinMode(STEPPER_RIGHT_STEP, OUTPUT);
+    pinMode(STEPPER_RIGHT_MS1, OUTPUT);
+    pinMode(STEPPER_RIGHT_MS2, OUTPUT);
+    pinMode(STEPPER_RIGHT_ENABLE, OUTPUT); //should be hardwired to ground
+
+    digitalWrite(STEPPER_RIGHT_MS1, LOW); //enable 1/4 microstepping
+    digitalWrite(STEPPER_RIGHT_MS2, HIGH);
+    digitalWrite(STEPPER_RIGHT_ENABLE, LOW); //should be unnecessary
+
 }
 
 void setLeftStepperConstRPM(int rpm)
 {
   //Serial.print("rpm in = ");
   //Serial.println(rpm);
+<<<<<<< HEAD
    if(rpm > 0)
     digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
   else if(rpm < 0)
@@ -110,36 +127,67 @@ void setLeftStepperConstRPM(int rpm)
   
   //Serial.print("leftConstSpeed = ");
   //Serial.println(leftConstSpeed);
+=======
+    if(rpm > 0)
+        digitalWrite(STEPPER_LEFT_DIR, LOW);
+    else if(rpm < 0)
+        digitalWrite(STEPPER_LEFT_DIR, HIGH);
+    else
+    {
+        noInterrupts();
+        leftConstSpeed = 0;
+        interrupts();
+        return;
+    }
+    
+    unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+    //Serial.print("stepsSec = ");
+    //Serial.println(stepsSec);
+
+    noInterrupts();
+    leftConstSpeed = 1000000 / stepsSec;
+    Timer1.attachInterrupt(updateLeftMotor);
+    Timer1.setPeriod(UPDATE_TIME);
+    interrupts();
+
+    //Serial.print("leftConstSpeed = ");
+    //Serial.println(leftConstSpeed);
+>>>>>>> 4a9338fa6cc08995ce54db05cd01fa9be9a8f42b
 }
 
 void setRightStepperConstRPM(int rpm) //same as function above, just check it out
 {
-  //Serial.print("rpm in = ");
-  //Serial.println(rpm);
-  if(rpm > 0)
-    digitalWrite(STEPPER_RIGHT_DIR, HIGH);
-  else if(rpm < 0)
-    digitalWrite(STEPPER_RIGHT_DIR, LOW);
-  else
-  {
-    noInterrupts();
-    rightConstSpeed = 0;
-    interrupts();
-    return;
-  }
+    //Serial.print("rpm in = ");
+    //Serial.println(rpm);
+    if(rpm > 0)
+        digitalWrite(STEPPER_RIGHT_DIR, HIGH);
+    else if(rpm < 0)
+        digitalWrite(STEPPER_RIGHT_DIR, LOW);
+    else
+    {
+        noInterrupts();
+        rightConstSpeed = 0;
+        interrupts();
+        return;
+    }
 
-  unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
-  //Serial.print("stepsSec = ");
-  //Serial.println(stepsSec);
-  
-  noInterrupts();
-  rightConstSpeed = 1000000 / stepsSec;
-  Timer3.attachInterrupt(updateRightMotor);
-  Timer3.setPeriod(UPDATE_TIME);
-  interrupts();
-  
-  //Serial.print("rightConstSpeed = ");
-  //Serial.println(rightConstSpeed);
+    unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
+    //Serial.print("stepsSec = ");
+    //Serial.println(stepsSec);
+
+    noInterrupts();
+    rightConstSpeed = 1000000 / stepsSec;
+    Timer3.attachInterrupt(updateRightMotor);
+    Timer3.setPeriod(UPDATE_TIME);
+    interrupts();
+
+    //Serial.print("rightConstSpeed = ");
+    //Serial.println(rightConstSpeed);
 }
 
 #endif
+
+
+
+
+

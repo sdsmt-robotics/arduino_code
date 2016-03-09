@@ -34,7 +34,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //    Global Variables
 ////////////////////////////////////////////////////////////////////////////////
-String inputString = "";         // a string to hold incoming data
+
 boolean stringComplete = false;  // whether the string is complete
 unsigned int sensorValue = 0;
 unsigned char input[8] = {0};
@@ -52,11 +52,9 @@ unsigned char cmdValue = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
-  Serial.begin(115200);
-  inputString.reserve(10);
-  
-  initializeSteppers();
-  initializeServos();
+    Serial.begin(115200);
+    initializeSteppers();
+    initializeServos();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,12 +80,9 @@ void loop() {
       cmdValue = Serial.read(); //this is a speed value from 0-255 centered on 127 used for constant-speed driving
       stringComplete = true;
     }
-  }
 
-  noInterrupts();
-  if (stringComplete)
-  {
-    switch(cmdTarget)
+    noInterrupts();
+    if (stringComplete)
     {
       case MOTOR_LEFT_TAG:
       {
@@ -161,7 +156,7 @@ void loop() {
 
 
 
-int assembleInt(unsigned char *string, int index)
+int assembleInt(unsigned char *input, int offset)
 {
   unsigned char inBytes[4] = {0}; //zeroes the storage array
   int num = 0;
@@ -179,9 +174,9 @@ int assembleInt(unsigned char *string, int index)
 
 void clearBuffer() //literally reads and dumps everything in the serial buffer
 {
-  unsigned char nothing;
-  while(Serial.available() > 0)
-    nothing = Serial.read();
+    unsigned char nothing;
+    while(Serial.available() > 0)
+        nothing = Serial.read();
 }
 
 void printInput(unsigned char *input) //simple function for printing hte input string. useful for troubleshooting
@@ -192,13 +187,18 @@ void printInput(unsigned char *input) //simple function for printing hte input s
 
 void updateSensors() //not sure how this wull be implemented officially, but it'll be similar probs
 {
-  sensorValue = analogRead(IR_RIGHT);
-  sensorValue |= IR_RIGHT_TAG;
-  Serial.println(sensorValue);
-  sensorValue = analogRead(IR_CENTER);
-  sensorValue |= IR_CENTER_TAG;
-  Serial.println(sensorValue);
-  sensorValue = analogRead(IR_LEFT);
-  sensorValue |= IR_LEFT_TAG;
-  Serial.println(sensorValue);
+    sensorValue = analogRead(IR_RIGHT);
+    sensorValue |= IR_RIGHT_TAG;
+    Serial.println(sensorValue);
+    sensorValue = analogRead(IR_CENTER);
+    sensorValue |= IR_CENTER_TAG;
+    Serial.println(sensorValue);
+    sensorValue = analogRead(IR_LEFT);
+    sensorValue |= IR_LEFT_TAG;
+    Serial.println(sensorValue);
 }
+
+
+
+
+

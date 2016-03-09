@@ -16,43 +16,48 @@ Servo leftServo, rightServo, raiseServo;
 
 void initializeServos()
 {
-  pinMode(CLAW_LEFT_PIN, OUTPUT);
-  pinMode(CLAW_RIGHT_PIN, OUTPUT);
-  pinMode(CLAW_RAISE_PIN, OUTPUT);
-  leftServo.attach(CLAW_LEFT_PIN);
-  rightServo.attach(CLAW_RIGHT_PIN);
-  raiseServo.attach(CLAW_RAISE_PIN);
+    pinMode(CLAW_LEFT_PIN, OUTPUT);
+    pinMode(CLAW_RIGHT_PIN, OUTPUT);
+    pinMode(CLAW_RAISE_PIN, OUTPUT);
+    leftServo.attach(CLAW_LEFT_PIN);
+    rightServo.attach(CLAW_RIGHT_PIN);
+    raiseServo.attach(CLAW_RAISE_PIN);
 
-  leftServo.write(CLAW_OPEN_POS);
-  rightServo.write(-CLAW_OPEN_POS);
-  raiseServo.write(CLAW_DOWN_POS);
+    leftServo.write(CLAW_OPEN_POS);
+    rightServo.write(-CLAW_OPEN_POS);
+    raiseServo.write(CLAW_DOWN_POS);
 }
 
 void raiseClaw()
 {
-  raiseServo.write(CLAW_UP_POS);
-  return;
+    raiseServo.write(CLAW_UP_POS);
+    return;
 }
 
 void lowerClaw()
 {
-  raiseServo.write(CLAW_DOWN_POS);
-  return;
+    raiseServo.write(CLAW_DOWN_POS);
+    return;
 }
 
 void closeClaw()
 {
-  leftServo.write(CLAW_CLOSE_POS);
-  rightServo.write(-CLAW_CLOSE_POS);
-  return;
+    leftServo.write(CLAW_CLOSE_POS);
+    rightServo.write(-CLAW_CLOSE_POS);
+    return;
 }
 
 void openClaw()
 {
-  leftServo.write(CLAW_OPEN_POS);
-  rightServo.write(-CLAW_OPEN_POS);
-  return;
+    leftServo.write(CLAW_OPEN_POS);
+    rightServo.write(-CLAW_OPEN_POS);
+    return;
 }
 
 
 #endif
+
+
+
+
+
