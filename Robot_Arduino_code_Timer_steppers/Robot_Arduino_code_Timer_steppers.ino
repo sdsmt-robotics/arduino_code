@@ -105,25 +105,25 @@ void loop() {
             }
             case MOTOR_LEFT_STEPS_TAG:
             {
-                Serial.print("\tLEFT_STEPS received.\n");
-                Serial.print("\tsteps: ");
+                //Serial.print("\tLEFT_STEPS received.\n");
+                //Serial.print("\tsteps: ");
                 int steps = assembleInt(input, 0);
-                Serial.println(steps);
-                Serial.print("\tseconds: ");
+                //Serial.println(steps);
+                //Serial.print("\tseconds: ");
                 int seconds = assembleInt(input, 4);
-                Serial.println(seconds);
+                //Serial.println(seconds);
                 setLeftStepperStepsTime(steps, seconds);
                 break;
             }
             case MOTOR_RIGHT_STEPS_TAG:
             {
-                Serial.print("\tRIGHT_STEPS received.\n");
-                Serial.print("\tsteps: ");
+                //Serial.print("\tRIGHT_STEPS received.\n");
+                //Serial.print("\tsteps: ");
                 int steps = assembleInt(input, 0);
-                Serial.println(steps);
-                Serial.print("\tseconds: ");
+                //Serial.println(steps);
+                //Serial.print("\tseconds: ");
                 int seconds = assembleInt(input, 4);
-                Serial.println(seconds);
+                //Serial.println(seconds);
                 setRightStepperStepsTime(steps, seconds);
                 break;
             }
