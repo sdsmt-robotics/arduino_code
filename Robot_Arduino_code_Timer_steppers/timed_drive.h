@@ -50,9 +50,9 @@ void setLeftStepperStepsTime(int steps, int seconds)
     unsigned long leftMicrosPerStep = (seconds * 1000000) / steps; //calculates the number of micros per step
   
     if(steps > 0)
-        digitalWrite(STEPPER_LEFT_DIR, LOW);
-    else if(steps < 0)
         digitalWrite(STEPPER_LEFT_DIR, HIGH);
+    else if(steps < 0)
+        digitalWrite(STEPPER_LEFT_DIR, LOW);
     else
         return;
 
