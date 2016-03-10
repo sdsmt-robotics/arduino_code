@@ -8,6 +8,7 @@
 #define IR_RIGHT_TAG  0x80
 #define IR_FRONT_TAG 0x86
 #define IR_LEFT_TAG   0x88
+#define IR_PACKET_END 0x70
 
 #define SENSOR_REQUEST_TAG 0x37
 
