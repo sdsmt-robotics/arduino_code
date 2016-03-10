@@ -52,6 +52,7 @@ void sendSensorValues()
     //add a leading 0 to the string if Values are two digits
     if ( strlen(left) == 2 )
     {
+        //dest, src, num bytes
         memmove(&left[1], &left[0], sizeof(left) - sizeof(*left));
         left[0] = '0';
         left[3] = '\0';
