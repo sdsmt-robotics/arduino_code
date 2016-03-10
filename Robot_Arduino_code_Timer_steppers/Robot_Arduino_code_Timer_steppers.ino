@@ -4,32 +4,8 @@
 #include "steppers.h"
 #include "servos.h"
 #include "timed_drive.h"
-
-////////////////////////////////////////////////////////////////////////////////
-//    Pin Defines
-////////////////////////////////////////////////////////////////////////////////
-
-//    IR Sensor Pins
-#define IR_RIGHT  A0
-#define IR_CENTER A1
-#define IR_LEFT   A2
-
-////////////////////////////////////////////////////////////////////////////////
-//    Packet Designations
-////////////////////////////////////////////////////////////////////////////////
-
-#define IR_RIGHT_TAG  0x8000
-#define IR_CENTER_TAG 0x8600
-#define IR_LEFT_TAG   0x8800
-
-#define MOTOR_LEFT_TAG  0x4C
-#define MOTOR_RIGHT_TAG 0x52
-
-#define MOTOR_LEFT_STEPS_TAG  0x39
-#define MOTOR_RIGHT_STEPS_TAG 0x40
-
-#define CLAW_CLOSE_TAG  0x41
-#define CLAW_RAISE_TAG  0x42
+#include "tags.h"
+#include "sensors.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Global Variables
@@ -54,6 +30,7 @@ void setup() {
     Serial.begin(115200);
     initializeSteppers();
     initializeServos();
+    initializeSensors();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,18 +167,7 @@ void printInput(unsigned char *input) //simple function for printing hte input s
         Serial.println(input[i]);
 }
 
-void updateSensors() //not sure how this wull be implemented officially, but it'll be similar probs
-{
-    sensorValue = analogRead(IR_RIGHT);
-    sensorValue |= IR_RIGHT_TAG;
-    Serial.println(sensorValue);
-    sensorValue = analogRead(IR_CENTER);
-    sensorValue |= IR_CENTER_TAG;
-    Serial.println(sensorValue);
-    sensorValue = analogRead(IR_LEFT);
-    sensorValue |= IR_LEFT_TAG;
-    Serial.println(sensorValue);
-}
+
 
 
 
