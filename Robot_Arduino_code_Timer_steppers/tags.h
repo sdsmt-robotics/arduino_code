@@ -9,6 +9,8 @@
 #define IR_FRONT_TAG 0x86
 #define IR_LEFT_TAG   0x88
 
+#define SENSOR_REQUEST_TAG 0x37
+
 #define MOTOR_LEFT_TAG  0x4C
 #define MOTOR_RIGHT_TAG 0x52
 
