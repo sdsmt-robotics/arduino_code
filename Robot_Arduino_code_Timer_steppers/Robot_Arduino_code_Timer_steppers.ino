@@ -27,7 +27,7 @@ unsigned char cmdValue = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(57600);
     initializeSteppers();
     initializeServos();
     initializeSensors();
@@ -118,17 +118,25 @@ void loop() {
                         openClaw();
                     break;
                 }
+                case SENSOR_REQUEST_TAG:
+                {
+                    updateSensors();
+                    sendSensorValues();
+                    break;
+                }
                 default:
                 {
                     Serial.println("\tFML. Bad motor tag received.");
                     Serial.print("\tFailing cmdTarget: "); //you screwed up and the arduino got jibberish 
                     Serial.println(cmdTarget);
                     Serial.println("\tInput: ");
-                    printInput(input);
+                    unsigned char nothing = Serial.read();
+                    clearBuffer();
+                    //printInput(input);
                 }
-            }
-        
+            }     
         }
+        cmdTarget = '\0';
         for(int i = 0; i < 8; i++) //clears out the input buffer FOR SURE GOD DAMN IT BECAUSE I WAS SICK OF TROUBLESHOOTING
             input[i] = '\0';
         stringComplete = false; //it's time to look for a new input, fam
