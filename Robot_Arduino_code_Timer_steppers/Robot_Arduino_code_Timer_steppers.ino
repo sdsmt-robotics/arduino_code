@@ -50,6 +50,7 @@ void loop() {
             }
             stringComplete = true;
         }
+        else if (cmdTarget == )
         else
         {
             while(!Serial.available()){} //if the second byte of two hasn't come in, chill and wait for it
