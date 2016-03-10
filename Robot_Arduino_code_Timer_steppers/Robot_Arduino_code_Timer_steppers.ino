@@ -27,7 +27,7 @@ unsigned char cmdValue = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
-    Serial.begin(57600);
+    Serial.begin(115200);
     initializeSteppers();
     initializeServos();
     initializeSensors();
