@@ -50,7 +50,11 @@ void loop() {
             }
             stringComplete = true;
         }
-        else if (cmdTarget == )
+        else if (cmdTarget == SENSOR_REQUEST_TAG)
+        {
+            //we're not expecting a second byte, so just move right along
+            stringComplete = true;
+        }
         else
         {
             while(!Serial.available()){} //if the second byte of two hasn't come in, chill and wait for it
