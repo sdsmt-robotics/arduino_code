@@ -7,7 +7,7 @@
 #define STEPPING 4
 #define STEPS_REV 200*STEPPING
 #define MAX_SPEED 25 //rpms  
-#define UPDATE_TIME 5000  //micros
+#define UPDATE_TIME 1000  //micros
 #define DUTY_CYCLE 512 //out of 1024
 
 //    Stepper Motor Pins
