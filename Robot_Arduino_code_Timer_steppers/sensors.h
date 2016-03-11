@@ -61,26 +61,86 @@ void sendSensorValues()
 
     Serial.write( (unsigned char) left_byte);
     Serial.write( (unsigned char) right_byte);
+
+    //bit things with backValue
+    left_byte = backValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = backValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
 void sendFrontSensorValues()
 {
+    //packet to be extracted with bitshifting evil on the C side
+    //unsigned ints are 2 bytes on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
 
+    unsigned short left_byte = 0;
+    unsigned short right_byte = 0;
+
+    left_byte = frontValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = frontValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
 void sendBackSensorValues()
 {
-    
+    //packet to be extracted with bitshifting evil on the C side
+    //unsigned ints are 2 bytes on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
+
+    unsigned short left_byte = 0;
+    unsigned short right_byte = 0;
+
+    left_byte = backValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = backValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
 void sendLeftSensorValues()
 {
-    
+    //packet to be extracted with bitshifting evil on the C side
+    //unsigned ints are 2 bytes on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
+
+    unsigned short left_byte = 0;
+    unsigned short right_byte = 0;
+
+    left_byte = leftValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = leftValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
 void sendRightensorValues()
 {
-    
+    //packet to be extracted with bitshifting evil on the C side
+    //unsigned ints are 2 bytes on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
+
+    unsigned short left_byte = 0;
+    unsigned short right_byte = 0;
+
+    left_byte = rightValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = rightValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
 #endif
