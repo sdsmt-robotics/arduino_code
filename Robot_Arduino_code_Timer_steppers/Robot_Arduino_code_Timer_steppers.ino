@@ -50,7 +50,7 @@ void loop() {
             }
             stringComplete = true;
         }
-        else if (cmdTarget == SENSOR_REQUEST_TAG)
+        else if (cmdTarget == SENSOR_REQUEST || cmdTarget == LEFT_SENSOR_REQUEST || cmdTarget == RIGHT_SENSOR_REQUEST || cmdTarget == FRONT_SENSOR_REQUEST || cmdTarget == BACK_SENSOR_REQUEST)
         {
             //we're not expecting a second byte, so just move right along
             stringComplete = true;
@@ -123,10 +123,34 @@ void loop() {
                         openClaw();
                     break;
                 }
-                case SENSOR_REQUEST_TAG:
+                case SENSOR_REQUEST:
                 {
                     updateSensors();
                     sendSensorValues();
+                    break;
+                }
+                case FRONT_SENSOR_REQUEST:
+                {
+                    updateSensors();
+                    sendFrontSensorValues();
+                    break;
+                }
+                case BACK_SENSOR_REQUEST:
+                {
+                    updateSensors();
+                    sendBackSensorValues();
+                    break;
+                }
+                case LEFT_SENSOR_REQUEST:
+                {
+                    updateSensors();
+                    sendLeftSensorValues();
+                    break;
+                }
+                case RIGHT_SENSOR_REQUEST:
+                {
+                    updateSensors();
+                    sendRightSensorValues();
                     break;
                 }
                 default:
@@ -134,7 +158,7 @@ void loop() {
                     Serial.println("\tFML. Bad motor tag received.");
                     Serial.print("\tFailing cmdTarget: "); //you screwed up and the arduino got jibberish 
                     Serial.println(cmdTarget);
-                    Serial.println("\tInput: ");
+                    //Serial.println("\tInput: ");
                     unsigned char nothing = Serial.read();
                     clearBuffer();
                     //printInput(input);
@@ -179,14 +203,3 @@ void printInput(unsigned char *input) //simple function for printing hte input s
     for(int i = 0; i < 8; i++)
         Serial.println(input[i]);
 }
-
-
-
-
-
-
-
-
-
-
-

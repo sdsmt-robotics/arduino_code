@@ -4,16 +4,19 @@
 #define LEFT_IR_PIN  A2
 #define RIGHT_IR_PIN A0
 #define FRONT_IR_PIN A1
+#define BACK_IR_PIN A3
 
 unsigned int leftValue = 0;
 unsigned int rightValue = 0;
 unsigned int frontValue = 0;
+unsigned int backValue = 0;
 
 void initializeSensors()
 {
     pinMode(LEFT_IR_PIN, INPUT);
     pinMode(RIGHT_IR_PIN, INPUT);
     pinMode(FRONT_IR_PIN, INPUT);
+    pinMode(BACK_IR_PIN, INPUT);
 }
 
 void updateSensors()
@@ -21,6 +24,7 @@ void updateSensors()
     leftValue = analogRead(LEFT_IR_PIN);
     rightValue = analogRead(RIGHT_IR_PIN);
     frontValue = analogRead(FRONT_IR_PIN);
+    backValue = analogRead(BACK_IR_PIN);
 }
 
 void sendSensorValues()
@@ -59,5 +63,24 @@ void sendSensorValues()
     Serial.write( (unsigned char) right_byte);
 }
 
-#endif
+void sendFrontSensorValues()
+{
 
+}
+
+void sendBackSensorValues()
+{
+    
+}
+
+void sendLeftSensorValues()
+{
+    
+}
+
+void sendRightensorValues()
+{
+    
+}
+
+#endif
