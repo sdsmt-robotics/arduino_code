@@ -24,7 +24,7 @@ void updateSensors()
     leftValue = analogRead(LEFT_IR_PIN);
     rightValue = analogRead(RIGHT_IR_PIN);
     frontValue = analogRead(FRONT_IR_PIN);
-    backValue = analogRead(BACK_IR_PIN);
+    //backValue = analogRead(BACK_IR_PIN);
 }
 
 void sendSensorValues()
