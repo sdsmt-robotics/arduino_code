@@ -125,7 +125,7 @@ void sendLeftSensorValues()
     Serial.write( (unsigned char) right_byte);
 }
 
-void sendRightensorValues()
+void sendRightSensorValues()
 {
     //packet to be extracted with bitshifting evil on the C side
     //unsigned ints are 2 bytes on the Arduino
@@ -144,3 +144,4 @@ void sendRightensorValues()
 }
 
 #endif
+
