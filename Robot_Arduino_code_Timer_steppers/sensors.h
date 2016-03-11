@@ -25,60 +25,39 @@ void updateSensors()
 
 void sendSensorValues()
 {
-    //Serial.write(IR_LEFT_TAG);
-    //Serial.print("Left value: ");
-    //Serial.println(leftValue);
-    //write the two bytes for the value here
-    //Serial.write(IR_RIGHT_TAG);
-    //Serial.print("Right value: ");
-    //Serial.println(rightValue);
-    //write the two bytes for the value here
-    //Serial.write(IR_FRONT_TAG);
-    //Serial.print("Front value: ");
-    //Serial.println(frontValue);
-    //write the two bytes for the value here
-
     //packet to be extracted with bitshifting evil on the C side
     //unsigned ints are 2 bytes on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
 
-    char left[4] = "";
-    char right[4] = "";
-    char front[4] = "";
+    unsigned short left_byte = 0;
+    unsigned short right_byte = 0;
 
-    sprintf(left, "%d", leftValue);
-    sprintf(right, "%d", rightValue);
-    sprintf(front, "%d", frontValue);
+    //Get and write each individual byte of sensor value
+    //bit things with leftValue
+    left_byte = leftValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = leftValue & right_mask;
 
-    //add a leading 0 to the string if Values are two digits
-    if ( strlen(left) == 2 )
-    {
-        //dest, src, num bytes
-        memmove(&left[1], &left[0], sizeof(left) - sizeof(*left));
-        left[0] = '0';
-        left[3] = '\0';
-    }
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 
-    if ( strlen(right) == 2 )
-    {
-        memmove(&right[1], &right[0], sizeof(right) - sizeof(*right));
-        right[0] = '0';
-        right[3] = '\0';
-    }
+    //bit things with rightValue
+    left_byte = rightValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = rightValue & right_mask;
 
-    if ( strlen(front) == 2 )
-    {
-        memmove(&front[1], &front[0], sizeof(front) - sizeof(*front));
-        front[0] = '0';
-        front[3] = '\0';
-    }
-    
-    
-    Serial.print(left);
-    Serial.print(right);
-    Serial.print(front);
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 
+    //bit things with frontValue
+    left_byte = frontValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = frontValue & right_mask;
+
+    Serial.write( (unsigned char) left_byte);
+    Serial.write( (unsigned char) right_byte);
 }
 
-
-
 #endif
+
