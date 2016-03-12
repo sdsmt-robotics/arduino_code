@@ -45,9 +45,11 @@ void stepRight()
     }
 }
 
-void setLeftStepperStepsTime(int steps, int milliSeconds)
+void setLeftStepperStepsTime(int steps, int seconds)
 {
-    unsigned long leftMicrosPerStep = (milliSeconds * 1000) / abs(steps); //calculates the number of micros per step
+    unsigned long leftMicrosPerStep = (seconds * 1000000) / abs(steps); //calculates the number of micros per step
+    //Serial.print("leftMicrosPerStep: ");
+    //Serial.println(leftMicrosPerStep);
   
     if(steps > 0)
         digitalWrite(STEPPER_LEFT_DIR, HIGH);
@@ -70,9 +72,9 @@ void setLeftStepperStepsTime(int steps, int milliSeconds)
   
 }
 
-void setRightStepperStepsTime(int steps, int milliSeconds)
+void setRightStepperStepsTime(int steps, int seconds)
 {
-    unsigned long rightMicrosPerStep = (milliSeconds * 1000) / abs(steps); //calculates the number of micros per step
+    unsigned long rightMicrosPerStep = (seconds * 1000000) / abs(steps); //calculates the number of micros per step
   
     if(steps > 0)
         digitalWrite(STEPPER_RIGHT_DIR, LOW);

@@ -87,9 +87,9 @@ void setLeftStepperConstRPM(int rpm)
   //Serial.print("rpm in = ");
   //Serial.println(rpm);
     if(rpm > 0)
-        digitalWrite(STEPPER_LEFT_DIR, LOW); //back i say (but really, go forward)
+        digitalWrite(STEPPER_LEFT_DIR, HIGH); //back i say (but really, go forward)
     else if(rpm < 0)
-        digitalWrite(STEPPER_LEFT_DIR, HIGH); //tally ho, m8 (take it back now ya'll)
+        digitalWrite(STEPPER_LEFT_DIR, LOW); //tally ho, m8 (take it back now ya'll)
     else
     {
         noInterrupts();
@@ -117,9 +117,9 @@ void setRightStepperConstRPM(int rpm) //same as function above, just check it ou
     //Serial.print("rpm in = ");
     //Serial.println(rpm);
     if(rpm > 0)
-        digitalWrite(STEPPER_RIGHT_DIR, HIGH);
-    else if(rpm < 0)
         digitalWrite(STEPPER_RIGHT_DIR, LOW);
+    else if(rpm < 0)
+        digitalWrite(STEPPER_RIGHT_DIR, HIGH);
     else
     {
         noInterrupts();
