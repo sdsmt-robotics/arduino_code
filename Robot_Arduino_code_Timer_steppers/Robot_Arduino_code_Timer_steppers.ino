@@ -91,9 +91,9 @@ void loop()
                     int steps = assembleInt(input, 0); //grabs the first four bytes, makes a number
                     //Serial.println(steps);
                     //Serial.print("\tseconds: ");
-                    int seconds = assembleInt(input, 4); //grabs the second 4 bytes, makes a number
+                    int milliSeconds = assembleInt(input, 4); //grabs the second 4 bytes, makes a number
                     //Serial.println(seconds);
-                    setLeftStepperStepsTime(steps, seconds);
+                    setLeftStepperStepsTime(steps, milliSeconds);
                     break;
                 }
                 case MOTOR_RIGHT_STEPS_TAG:
@@ -103,9 +103,9 @@ void loop()
                     int steps = assembleInt(input, 0);
                     //Serial.println(steps);
                     //Serial.print("\tseconds: ");
-                    int seconds = assembleInt(input, 4);
+                    int milliSeconds = assembleInt(input, 4);
                     //Serial.println(seconds);
-                    setRightStepperStepsTime(steps, seconds);
+                    setRightStepperStepsTime(steps, milliSeconds);
                     break;
                 }
                 case CLAW_RAISE_TAG:
