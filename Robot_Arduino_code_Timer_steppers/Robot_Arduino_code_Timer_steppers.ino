@@ -37,7 +37,8 @@ void setup() {
 //    Main Loop
 ////////////////////////////////////////////////////////////////////////////////
 
-void loop() {
+void loop() 
+{
     if (Serial.available() > 0)
     {
         cmdTarget = Serial.read(); //first byte is the identifying tag
@@ -125,31 +126,26 @@ void loop() {
                 }
                 case SENSOR_REQUEST:
                 {
-                    updateSensors();
                     sendSensorValues();
                     break;
                 }
                 case FRONT_SENSOR_REQUEST:
                 {
-                    updateSensors();
                     sendFrontSensorValues();
                     break;
                 }
                 case BACK_SENSOR_REQUEST:
                 {
-                    updateSensors();
                     sendBackSensorValues();
                     break;
                 }
                 case LEFT_SENSOR_REQUEST:
                 {
-                    updateSensors();
                     sendLeftSensorValues();
                     break;
                 }
                 case RIGHT_SENSOR_REQUEST:
                 {
-                    updateSensors();
                     sendRightSensorValues();
                     break;
                 }
@@ -171,6 +167,7 @@ void loop() {
         stringComplete = false; //it's time to look for a new input, fam
     }
     interrupts();
+    updateSensors();
 }
 
 
