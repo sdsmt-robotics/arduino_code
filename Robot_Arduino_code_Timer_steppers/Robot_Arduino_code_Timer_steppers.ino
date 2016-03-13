@@ -110,7 +110,8 @@ void loop()
                 }
                 case CLAW_RAISE_TAG:
                 {
-                    if(cmdValue == 1) //raises the claw, pretty straightforward
+                    //Serial.println("Raise tag");
+                    if(cmdValue == 255) //raises the claw, pretty straightforward
                         raiseClaw();
                     else
                         lowerClaw();
@@ -118,7 +119,8 @@ void loop()
                 }
                 case CLAW_CLOSE_TAG: //closes the claw
                 {
-                    if(cmdValue == 1)
+                    //Serial.println("Close tag");
+                    if(cmdValue == 255)
                         closeClaw();
                     else
                         openClaw();
