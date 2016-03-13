@@ -3,8 +3,8 @@
 
 #include <Servo.h>
 
-#define CLAW_LEFT_PIN  5
-#define CLAW_RIGHT_PIN 6
+#define CLAW_LEFT_PIN  11
+#define CLAW_RIGHT_PIN 10
 #define CLAW_RAISE_PIN  9
 
 #define CLAW_OPEN_POS  20

@@ -1,9 +1,9 @@
 #ifndef __SENSORS_H
 #define __SENSORS_H
 
-#define LEFT_IR_PIN  A2
-#define RIGHT_IR_PIN A0
-#define FRONT_IR_PIN A1
+#define LEFT_IR_PIN  A0
+#define RIGHT_IR_PIN A1
+#define FRONT_IR_PIN A2
 #define BACK_IR_PIN A3
 
 unsigned int leftValue = 0;
