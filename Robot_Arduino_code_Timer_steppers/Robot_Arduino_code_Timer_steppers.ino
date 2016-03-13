@@ -203,3 +203,4 @@ void printInput(unsigned char *input) //simple function for printing hte input s
         Serial.println(input[i]);
 }
 
+
