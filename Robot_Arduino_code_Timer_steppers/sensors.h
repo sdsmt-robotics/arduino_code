@@ -4,9 +4,9 @@
 #include "globals.h"
 
 #define LEFT_IR_PIN  A0
-#define RIGHT_IR_PIN A1
+#define RIGHT_IR_PIN A4
 #define FRONT_IR_PIN A2
-#define BACK_IR_PIN A3
+#define BACK_IR_PIN A10
 
 unsigned int leftValue = 0;
 unsigned int rightValue = 0;
@@ -170,5 +170,4 @@ void sendRightSensorValues()
 }
 
 #endif
-
 
