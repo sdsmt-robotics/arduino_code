@@ -2,6 +2,7 @@
 #define __TIMED_DRIVE_H
 
 #include "steppers.h"
+#include "globals.h"
 
 volatile unsigned long leftStepsTarget = 0; //global vars, sets the target number of steps
 volatile unsigned long leftSteps = 0;
@@ -11,7 +12,7 @@ volatile unsigned long rightSteps = 0;
 
 void stepLeft()
 {
-    //Serial.println(leftSteps);
+    //in->println(leftSteps);
     if(leftSteps >= leftStepsTarget || leftStepsTarget == 0)
     {
         digitalWrite(STEPPER_LEFT_STEP, LOW);
@@ -29,7 +30,7 @@ void stepLeft()
 
 void stepRight()
 {
-    //Serial.println(rightSteps);
+    //in->println(rightSteps);
     if(rightSteps >= rightStepsTarget || rightStepsTarget == 0)
     {
         digitalWrite(STEPPER_RIGHT_STEP, LOW);
@@ -48,8 +49,8 @@ void stepRight()
 void setLeftStepperStepsTime(int steps, int seconds)
 {
     unsigned long leftMicrosPerStep = (seconds * 1000000) / abs(steps); //calculates the number of micros per step
-    //Serial.print("leftMicrosPerStep: ");
-    //Serial.println(leftMicrosPerStep);
+    //in->print("leftMicrosPerStep: ");
+    //in->println(leftMicrosPerStep);
   
     if(steps > 0)
         digitalWrite(STEPPER_LEFT_DIR, HIGH);

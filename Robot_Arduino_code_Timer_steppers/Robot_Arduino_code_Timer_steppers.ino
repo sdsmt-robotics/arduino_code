@@ -6,6 +6,7 @@
 #include "timed_drive.h"
 #include "tags.h"
 #include "sensors.h"
+#include "globals.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //    Global Variables
@@ -18,16 +19,12 @@ unsigned char cmdTarget = 0;
 unsigned char cmdValue = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
-//    Global Objects
-////////////////////////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////////////////
 //    Setup Function
 ////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
-    Serial.begin(115200);
+    in->begin(115200);
+    out->begin(115200);
     initializeSteppers();
     initializeServos();
     initializeSensors();
@@ -39,15 +36,15 @@ void setup() {
 
 void loop() 
 {
-    if (Serial.available() > 0)
+    if (in->available() > 0)
     {
-        cmdTarget = Serial.read(); //first byte is the identifying tag
+        cmdTarget = in->read(); //first byte is the identifying tag
         if(cmdTarget == MOTOR_LEFT_STEPS_TAG || cmdTarget == MOTOR_RIGHT_STEPS_TAG) //if the command is a # of steps in a time period, grab the next 8 bytes
         {
             for(int i = 0; i < 8; i++)
             {
-                while(!Serial.available()){} //makes sure there's something to read
-                input[i] = Serial.read();
+                while(!in->available()){} //makes sure there's something to read
+                input[i] = in->read();
             }
             stringComplete = true;
         }
@@ -58,8 +55,8 @@ void loop()
         }
         else
         {
-            while(!Serial.available()){} //if the second byte of two hasn't come in, chill and wait for it
-            cmdValue = Serial.read(); //this is a speed value from 0-255 centered on 127 used for constant-speed driving
+            while(!in->available()){} //if the second byte of two hasn't come in, chill and wait for it
+            cmdValue = in->read(); //this is a speed value from 0-255 centered on 127 used for constant-speed driving
             stringComplete = true;
         }
 
@@ -86,31 +83,31 @@ void loop()
                 }
                 case MOTOR_LEFT_STEPS_TAG:
                 {
-                    //Serial.println("\tLEFT_STEPS received."); //lots of debug printing
-                    //Serial.print("\tsteps: ");
+                    //in->println("\tLEFT_STEPS received."); //lots of debug printing
+                    //in->print("\tsteps: ");
                     int steps = assembleInt(input, 0); //grabs the first four bytes, makes a number
-                    //Serial.println(steps);
-                    //Serial.print("\tseconds: ");
+                    //in->println(steps);
+                    //in->print("\tseconds: ");
                     int seconds = assembleInt(input, 4); //grabs the second 4 bytes, makes a number
-                    //Serial.println(seconds);
+                    //in->println(seconds);
                     setLeftStepperStepsTime(steps, seconds);
                     break;
                 }
                 case MOTOR_RIGHT_STEPS_TAG:
                 {
-                    //Serial.println("\tRIGHT_STEPS received."); //see above
-                    //Serial.print("\tsteps: ");
+                    //in->println("\tRIGHT_STEPS received."); //see above
+                    //in->print("\tsteps: ");
                     int steps = assembleInt(input, 0);
-                    //Serial.println(steps);
-                    //Serial.print("\tseconds: ");
+                    //in->println(steps);
+                    //in->print("\tseconds: ");
                     int seconds = assembleInt(input, 4);
-                    //Serial.println(seconds);
+                    //in->println(seconds);
                     setRightStepperStepsTime(steps, seconds);
                     break;
                 }
                 case CLAW_RAISE_TAG:
                 {
-                    //Serial.println("Raise tag");
+                    //in->println("Raise tag");
                     if(cmdValue == 255) //raises the claw, pretty straightforward
                         raiseClaw();
                     else
@@ -119,7 +116,7 @@ void loop()
                 }
                 case CLAW_CLOSE_TAG: //closes the claw
                 {
-                    //Serial.println("Close tag");
+                    //in->println("Close tag");
                     if(cmdValue == 255)
                         closeClaw();
                     else
@@ -153,11 +150,11 @@ void loop()
                 }
                 default:
                 {
-                    Serial.println("\tFML. Bad motor tag received.");
-                    Serial.print("\tFailing cmdTarget: "); //you screwed up and the arduino got jibberish 
-                    Serial.println(cmdTarget);
-                    //Serial.println("\tInput: ");
-                    unsigned char nothing = Serial.read();
+                    in->println("\tFML. Bad motor tag received.");
+                    in->print("\tFailing cmdTarget: "); //you screwed up and the arduino got jibberish 
+                    in->println(cmdTarget);
+                    //in->println("\tInput: ");
+                    unsigned char nothing = in->read();
                     clearBuffer();
                     //printInput(input);
                 }
@@ -193,13 +190,13 @@ int assembleInt(unsigned char *input, int offset)
 void clearBuffer() //literally reads and dumps everything in the serial buffer
 {
     unsigned char nothing;
-    while(Serial.available() > 0)
-        nothing = Serial.read();
+    while(in->available() > 0)
+        nothing = in->read();
 }
 
 void printInput(unsigned char *input) //simple function for printing hte input string. useful for troubleshooting
 {
     for(int i = 0; i < 8; i++)
-        Serial.println(input[i]);
+        in->println(input[i]);
 }
 

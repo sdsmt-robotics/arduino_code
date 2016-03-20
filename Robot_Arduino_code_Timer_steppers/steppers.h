@@ -3,6 +3,7 @@
 
 #include <TimerOne.h>
 #include <TimerThree.h>
+#include "globals.h"
 
 #define STEPPING 4
 #define STEPS_REV 200*STEPPING
@@ -84,8 +85,8 @@ void initializeSteppers()
 
 void setLeftStepperConstRPM(int rpm)
 {
-  //Serial.print("rpm in = ");
-  //Serial.println(rpm);
+  //in->print("rpm in = ");
+  //in->println(rpm);
     if(rpm > 0)
         digitalWrite(STEPPER_LEFT_DIR, HIGH); //back i say (but really, go forward)
     else if(rpm < 0)
@@ -99,8 +100,8 @@ void setLeftStepperConstRPM(int rpm)
     }
     
     unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60; //calcs the number of steps per sec from RPM
-    //Serial.print("stepsSec = ");
-    //Serial.println(stepsSec);
+    //in->print("stepsSec = ");
+    //in->println(stepsSec);
 
     noInterrupts();
     leftConstSpeed = 1000000 / stepsSec; //in this case "spped: is in uS per step. sorry about the stupid logic
@@ -108,14 +109,14 @@ void setLeftStepperConstRPM(int rpm)
     Timer1.setPeriod(UPDATE_TIME); //set the interrupt to update the stepper speed UPDATE_TIME micros
     interrupts();
 
-    //Serial.print("leftConstSpeed = ");
-    //Serial.println(leftConstSpeed);
+    //in->print("leftConstSpeed = ");
+    //in->println(leftConstSpeed);
 }
 
 void setRightStepperConstRPM(int rpm) //same as function above, just check it out
 {
-    //Serial.print("rpm in = ");
-    //Serial.println(rpm);
+    //in->print("rpm in = ");
+    //in->println(rpm);
     if(rpm > 0)
         digitalWrite(STEPPER_RIGHT_DIR, LOW);
     else if(rpm < 0)
@@ -129,8 +130,8 @@ void setRightStepperConstRPM(int rpm) //same as function above, just check it ou
     }
 
     unsigned long stepsSec = (abs(rpm) * STEPS_REV) / 60;
-    //Serial.print("stepsSec = ");
-    //Serial.println(stepsSec);
+    //in->print("stepsSec = ");
+    //in->println(stepsSec);
 
     noInterrupts();
     rightConstSpeed = 1000000 / stepsSec;
@@ -138,8 +139,8 @@ void setRightStepperConstRPM(int rpm) //same as function above, just check it ou
     Timer3.setPeriod(UPDATE_TIME);
     interrupts();
 
-    //Serial.print("rightConstSpeed = ");
-    //Serial.println(rightConstSpeed);
+    //in->print("rightConstSpeed = ");
+    //in->println(rightConstSpeed);
 }
 
 #endif

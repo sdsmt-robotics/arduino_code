@@ -2,6 +2,7 @@
 #define __SERVOS_H
 
 #include <Servo.h>
+#include "globals.h"
 
 #define CLAW_LEFT_PIN  10
 #define CLAW_RIGHT_PIN 9

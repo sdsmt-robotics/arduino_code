@@ -1,6 +1,8 @@
 #ifndef __SENSORS_H
 #define __SENSORS_H
 
+#include "globals.h"
+
 #define LEFT_IR_PIN  A0
 #define RIGHT_IR_PIN A1
 #define FRONT_IR_PIN A2
@@ -67,32 +69,32 @@ void sendSensorValues()
     left_byte = left_byte >> 8;
     right_byte = leftValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 
     //bit things with rightValue
     left_byte = rightValue & left_mask;
     left_byte = left_byte >> 8;
     right_byte = rightValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 
     //bit things with frontValue
     left_byte = frontValue & left_mask;
     left_byte = left_byte >> 8;
     right_byte = frontValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 
     //bit things with backValue
     left_byte = backValue & left_mask;
     left_byte = left_byte >> 8;
     right_byte = backValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 }
 
 void sendFrontSensorValues()
@@ -109,8 +111,8 @@ void sendFrontSensorValues()
     left_byte = left_byte >> 8;
     right_byte = frontValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 }
 
 void sendBackSensorValues()
@@ -127,8 +129,8 @@ void sendBackSensorValues()
     left_byte = left_byte >> 8;
     right_byte = backValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 }
 
 void sendLeftSensorValues()
@@ -145,8 +147,8 @@ void sendLeftSensorValues()
     left_byte = left_byte >> 8;
     right_byte = leftValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 }
 
 void sendRightSensorValues()
@@ -163,8 +165,8 @@ void sendRightSensorValues()
     left_byte = left_byte >> 8;
     right_byte = rightValue & right_mask;
 
-    Serial.write( (unsigned char) left_byte);
-    Serial.write( (unsigned char) right_byte);
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
 }
 
 #endif
