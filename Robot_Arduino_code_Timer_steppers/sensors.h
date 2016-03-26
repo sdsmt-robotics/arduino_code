@@ -7,13 +7,15 @@
 #define RIGHT_IR_PIN A4
 #define FRONT_IR_PIN A2
 #define BACK_IR_PIN A10
+#define VIC_IR_PIN A6
 
 unsigned int leftValue = 0;
 unsigned int rightValue = 0;
 unsigned int frontValue = 0;
 unsigned int backValue = 0;
+unsigned int vicValue = 0;
 
-unsigned long leftTemp, rightTemp, frontTemp, backTemp = 0;
+unsigned long leftTemp, rightTemp, frontTemp, backTemp, vicTemp = 0;
 unsigned int count = 0;
 unsigned long lastMillis = 0;
 
@@ -23,6 +25,7 @@ void initializeSensors()
     pinMode(RIGHT_IR_PIN, INPUT);
     pinMode(FRONT_IR_PIN, INPUT);
     pinMode(BACK_IR_PIN, INPUT);
+    pinMode(VIC_IR_PIN, INPUT);
     lastMillis = millis();
 }
 
@@ -34,11 +37,13 @@ void updateSensors()
         rightValue = rightTemp / count;
         frontValue = frontTemp / count;
         backValue =  backTemp / count;
+        vicValue = vicTemp / count;
     
         leftTemp =  0;
         rightTemp = 0;
         frontTemp = 0;
         backTemp =  0;
+        vicTemp = 0;
 
         count = 0;
         lastMillis = millis();
@@ -49,6 +54,7 @@ void updateSensors()
       rightTemp += analogRead(RIGHT_IR_PIN);
       frontTemp += analogRead(FRONT_IR_PIN);
       //backTemp += analogRead(BACK_IR_PIN);
+      //vicTemp += analogRead(VIC_IR_PIN);
       count++;
     }
 }
@@ -92,6 +98,14 @@ void sendSensorValues()
     left_byte = backValue & left_mask;
     left_byte = left_byte >> 8;
     right_byte = backValue & right_mask;
+
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
+
+    //bit things with vicValue
+    left_byte = vicValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = vicValue & right_mask;
 
     out->write( (unsigned char) left_byte);
     out->write( (unsigned char) right_byte);
@@ -164,6 +178,24 @@ void sendRightSensorValues()
     left_byte = rightValue & left_mask;
     left_byte = left_byte >> 8;
     right_byte = rightValue & right_mask;
+
+    out->write( (unsigned char) left_byte);
+    out->write( (unsigned char) right_byte);
+}
+
+void sendVicSensorValues()
+{
+    //packet to be extracted with bitshifting evil on the C side
+    //unsigned ints are 2 unsigned chars on the Arduino
+    unsigned int right_mask = 0xFF;
+    unsigned int left_mask = 0xFF00;
+
+    unsigned int left_byte = 0;
+    unsigned int right_byte = 0;
+
+    left_byte = vicValue & left_mask;
+    left_byte = left_byte >> 8;
+    right_byte = vicValue & right_mask;
 
     out->write( (unsigned char) left_byte);
     out->write( (unsigned char) right_byte);

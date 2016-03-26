@@ -148,6 +148,11 @@ void loop()
                     sendRightSensorValues();
                     break;
                 }
+                case VIC_SENSOR_REQUEST:
+                {
+                    sendVicSensorValues();
+                    break;
+                }
                 default:
                 {
                     in->println("\tFML. Bad motor tag received.");
