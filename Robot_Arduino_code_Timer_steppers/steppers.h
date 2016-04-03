@@ -5,8 +5,8 @@
 #include <TimerThree.h>
 #include "globals.h"
 
-#define STEPPING 2
-#define GEAR_RATIO 5.0
+#define STEPPING 4.0
+#define GEAR_RATIO 5.2
 #define STEPS_REV 200*STEPPING*GEAR_RATIO
 #define MAX_SPEED 40 //rpms  
 #define UPDATE_TIME 1000  //micros
@@ -26,7 +26,7 @@
 #define STEPPER_RIGHT_MS2    51  //green
 #define STEPPER_RIGHT_ENABLE 53  //orange
 
-#define STEPPER_LEFT_STEP   13
+#define STEPPER_LEFT_STEP   11
 #define STEPPER_RIGHT_STEP   2 
 
 volatile unsigned long leftConstSpeed = 0; //global vars for speed control, checked by the interrupt every 1 mS. in uS/step

@@ -8,10 +8,10 @@
 #define CLAW_RIGHT_PIN 9
 #define CLAW_RAISE_PIN 6  //green
 
-#define CLAW_OPEN_POS  90
+#define CLAW_OPEN_POS  120
 #define CLAW_CLOSE_POS 50
-#define CLAW_DOWN_POS  15
-#define CLAW_UP_POS    120
+#define CLAW_DOWN_POS  10
+#define CLAW_UP_POS    180
 
 Servo leftServo, rightServo, raiseServo;
 
