@@ -5,25 +5,26 @@
 #include <TimerThree.h>
 #include "globals.h"
 
-#define STEPPING 4
-#define STEPS_REV 200*STEPPING
-#define MAX_SPEED 25 //rpms  
+#define STEPPING 2
+#define GEAR_RATIO 5.0
+#define STEPS_REV 200*STEPPING*GEAR_RATIO
+#define MAX_SPEED 40 //rpms  
 #define UPDATE_TIME 1000  //micros
 #define DUTY_CYCLE 512 //out of 1024
 
 //    Stepper Motor Pins
 //    Remember to tie SLEEP to 5v
 
-#define STEPPER_LEFT_DIR    23
-#define STEPPER_LEFT_MS1    25
-#define STEPPER_LEFT_MS2    27
-#define STEPPER_LEFT_ENABLE 29
+#define STEPPER_LEFT_DIR    23  //white
+#define STEPPER_LEFT_MS1    25  //brown
+#define STEPPER_LEFT_MS2    27  //green
+#define STEPPER_LEFT_ENABLE 29  //orange
 
  
-#define STEPPER_RIGHT_DIR    47
-#define STEPPER_RIGHT_MS1    49
-#define STEPPER_RIGHT_MS2    51
-#define STEPPER_RIGHT_ENABLE 53
+#define STEPPER_RIGHT_DIR    47  //white
+#define STEPPER_RIGHT_MS1    49  //brown
+#define STEPPER_RIGHT_MS2    51  //green
+#define STEPPER_RIGHT_ENABLE 53  //orange
 
 #define STEPPER_LEFT_STEP   13
 #define STEPPER_RIGHT_STEP   2 

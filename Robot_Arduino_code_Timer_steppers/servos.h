@@ -6,7 +6,7 @@
 
 #define CLAW_LEFT_PIN  10
 #define CLAW_RIGHT_PIN 9
-#define CLAW_RAISE_PIN 6
+#define CLAW_RAISE_PIN 6  //green
 
 #define CLAW_OPEN_POS  90
 #define CLAW_CLOSE_POS 50
