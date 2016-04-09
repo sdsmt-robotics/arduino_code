@@ -4,14 +4,14 @@
 #include <Servo.h>
 #include "globals.h"
 
-#define CLAW_LEFT_PIN  10
-#define CLAW_RIGHT_PIN 9
+#define CLAW_LEFT_PIN  10 //brown
+#define CLAW_RIGHT_PIN 9  //white
 #define CLAW_RAISE_PIN 6  //green
 
-#define CLAW_OPEN_POS  120
-#define CLAW_CLOSE_POS 50
-#define CLAW_DOWN_POS  10
-#define CLAW_UP_POS    180
+#define CLAW_OPEN_POS  100
+#define CLAW_CLOSE_POS 30
+#define CLAW_DOWN_POS  65
+#define CLAW_UP_POS    170
 
 Servo leftServo, rightServo, raiseServo;
 
